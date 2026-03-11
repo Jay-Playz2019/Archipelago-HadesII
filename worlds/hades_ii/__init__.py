@@ -67,87 +67,64 @@ class HadesIIWorld(World):
                 pool.append(item)
                 
         # Filler Stuff
-        # There's probably a more efficient way to do this with for loops or other iterables
         total_fillers_needed = len(local_location_table)- len(pool)- len(location_table_prophecies_events) 
-        # Not 100% sure why the prophecies are in here, just copied and pasted, I'll figure it out later
+        # Not 100% sure why the prophecy events are in here, just copied and pasted, I'll figure it out later
         
-        ash_pack_percentage = self.options.ash_pack_percentage
-        bones_pack_percentage = self.options.bones_pack_percentage
-        psyche_pack_percentage = self.options.psyche_pack_percentage
-        nightmare_pack_percentage = self.options.nightmare_pack_percentage
-        nectar_pack_percentage = self.options.nectar_pack_percentage
-        ambrosia_pack_percentage = self.options.ambrosia_pack_percentage
-        helper_percentage = self.options.filler_helper_percentage
-        trap_percentage = self.options.filler_trap_percentage
+        # Define the percentages in the pool based off options
+        percentages = {
+            "ash": self.options.ash_pack_percentage,
+            "bones": self.options.bones_pack_percentage,
+            "psyche": self.options.psyche_pack_percentage,
+            "nectar": self.options.nectar_pack_percentage,
+            "ambrosia": self.options.ambrosia_pack_percentage,
+            "nightmare": self.options.nightmare_pack_percentage,
+            "helpers": self.options.filler_helper_percentage,
+            "traps": self.options.filler_trap_percentage,
+        }
 
-        total_percentage = sum([ash_pack_percentage, bones_pack_percentage, psyche_pack_percentage, nightmare_pack_percentage, 
-                                nectar_pack_percentage, ambrosia_pack_percentage, helper_percentage, trap_percentage])
+        total_percentage = sum(percentages.values())
 
         if total_percentage == 0:
-            bones_pack_percentage = 100
+            percentages["bones"] = 100
+            total_percentage = 100
             
         correction = 100/total_percentage
         
-        ash_needed = int(total_fillers_needed * ash_pack_percentage * correction / 100)
-        psyche_needed = int(total_fillers_needed * psyche_pack_percentage * correction / 100)
-        nectar_needed = int(total_fillers_needed * nectar_pack_percentage * correction / 100)
-        ambrosia_needed = int(total_fillers_needed * ambrosia_pack_percentage * correction / 100)
-        nightmare_needed = int(total_fillers_needed * nightmare_pack_percentage * correction / 100)
-        traps_needed = int(total_fillers_needed * trap_percentage * correction / 100)
-        helpers_needed = int(total_fillers_needed * helper_percentage * correction / 100)
+        # Calculate the needed amounts
+        counts = {
+            name: int(total_fillers_needed * pct * correction / 100)
+            for name, pct in percentages.items()
+        }
+
+        # Populate the rest with bones for remainder safety
+        counts["bones"] += total_fillers_needed - sum(counts.values())
         
-        bones_needed = (total_fillers_needed - psyche_needed - ash_needed - nightmare_needed
-                        - nectar_needed - ambrosia_needed - traps_needed - helpers_needed)
+        # Helpers
+        health_helpers = int(counts["helpers"] * self.options.max_health_helper_percentage / 100)
+        money_helpers = counts["helpers"] - health_helpers
         
         trap_pool = create_trap_pool()
 
         # Populate the pool with fillers
-        # Again could probably be done with nested for loops, but I'll explore that later
-        for _ in range(bones_needed):
-            item = Hades_II_Item("Bones", self.player)
-            pool.append(item)
-            
-        for _ in range(ash_needed):
-            item = Hades_II_Item("Ash", self.player)
-            pool.append(item)
-            
-        for _ in range(psyche_needed):
-            item = Hades_II_Item("Psyche", self.player)
-            pool.append(item)
-            
-        for _ in range(nectar_needed):
-            item = Hades_II_Item("Nectar", self.player)
-            pool.append(item)
-        
-        for _ in range(ambrosia_needed):
-            item = Hades_II_Item("Ambrosia", self.player)
-            pool.append(item)
-            
-        for _ in range(nectar_needed):
-            item = Hades_II_Item("Nightmare", self.player)
-            pool.append(item)
-            
-        # Helpers
-        health_helpers_needed = int(helpers_needed * self.options.max_health_helper_percentage / 100)
-        money_helpers_needed = int(100-health_helpers_needed)
-        
-        for _ in range(health_helpers_needed):
-            item = Hades_II_Item("Max Health Helper", self.player)
-            pool.append(item)
-            
-        for _ in range(money_helpers_needed):
-            item = Hades_II_Item("Initial Money Helper", self.player)
-            pool.append(item)
-        
+        items = {
+            "Ash": counts["ash"],
+            "Bones": counts["bones"],
+            "Psyche": counts["psyche"],
+            "Nectar": counts["nectar"],
+            "Ambrosia": counts["ambrosia"],
+            "Nightmare": counts["nightmare"],
+            "Max Health Helper": health_helpers,
+            "Initial Money Helper": money_helpers,
+        }
+
+        for name, count in items.items():
+            for _ in range(count):
+                pool.append(Hades_II_Item(name, self.player))
         
         # Fill traps
-        # Having the index separated seems redundant, once again I'll figure it out later
-        index = 0
-        for _ in range(0, traps_needed):
-            item_name = trap_pool[index]
-            item = Hades_II_Item(item_name, self.player)
-            pool.append(item)
-            index = (index + 1) % len(trap_pool)
+        for i in range(counts["traps"]):
+            item_name = trap_pool[i % len(trap_pool)]
+            pool.append(Hades_II_Item(item_name, self.player))
             
         # Add items to pool
         self.multiworld.itempool += pool
