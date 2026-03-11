@@ -1,0 +1,84 @@
+from BaseClasses import Location
+
+hades_ii_base_location_id = 1
+max_number_room_checks = 1700 + hades_ii_base_location_id
+
+location_keepsakes = {
+    "Hecate Keepsake": max_number_room_checks +1,
+    "Odysseus Keepsake": max_number_room_checks +2,
+    "Chaos Keepsake": max_number_room_checks + 33
+}
+
+location_weapons = {
+    "Staff Weapon Unlock Location": max_number_room_checks + 34,
+    "Coat weapon Unlock Location": max_number_room_checks + 39
+}
+
+location_tools = {
+    "Shovel Tool Unlock Location": max_number_room_checks + 40,
+    "Last Tool Unlock Location": max_number_room_checks + 44
+}
+
+location_table_prophecies = {
+    "Witch of the Crossroads Prophecy":  max_number_room_checks + 45,
+    "Last prophecy": max_number_room_checks + 133
+}
+
+location_table_prophecies_events = {
+    "Witch of the Crossroads Event": None,
+    "Last prophecy": None
+}
+
+group_keepsakes = {"keepsakes": location_keepsakes.keys()}
+group_weapons = {"weapons": location_weapons.keys()}
+group_tools = {"tools": location_tools.keys()}
+group_prophecies = {"prophecies": location_table_prophecies.keys()}
+
+location_name_groups = {
+    **group_keepsakes,
+    **group_weapons,
+    **group_tools,
+    **group_prophecies,
+}
+
+def give_all_locations_table() -> dict:
+    return {
+        **location_keepsakes,
+        **location_weapons,
+        **location_tools,
+        **location_table_prophecies,
+        **location_table_prophecies_events,
+    }
+
+def setup_location_table_with_settings(options):
+    total_table = {}
+ 
+    total_table.update(location_table_prophecies_events)
+    
+    if options.keepsakesanity.value == 1:
+        total_table.update(location_keepsakes)
+     
+    if options.weaponsanity.value == 1:
+        for weaponLocation, weaponData in location_weapons.items():
+            if not should_ignore_weapon_location(weaponLocation, options):
+                total_table.update({weaponLocation: weaponData})
+    
+    if options.fatesanity == 1:
+        total_table.update(location_table_prophecies)
+    
+    return total_table
+
+def should_ignore_weapon_location(weaponLocation : str, options):
+    if options.initial_weapon.value == 0 and weaponLocation == "Staff Weapon Unlock Location":
+        return True
+    if options.initial_weapon.value == 1 and weaponLocation == "Daggers Weapon Unlock Location":
+        return True
+    if options.initial_weapon.value == 2 and weaponLocation == "Torch Weapon Unlock Location":
+        return True
+    if options.initial_weapon.value == 3 and weaponLocation == "Axe Weapon Unlock Location":
+        return True
+    if options.initial_weapon.value == 4 and weaponLocation == "Skull Weapon Unlock Location":
+        return True
+    if options.initial_weapon.value == 5 and weaponLocation == "Coat Weapon Unlock Location":
+        return True
+    return False
