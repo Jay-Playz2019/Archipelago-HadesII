@@ -10,6 +10,8 @@ from .Items import item_table_keepsakes, item_table_weapons, item_table_aspects
 from .Locations import give_all_locations_table, location_name_groups, setup_location_table_with_settings
 from .Locations import location_table_prophecies_events
 
+from .Rules import set_rules
+
 # Probably needs to be re-done, mostly copied from H1 AP
 # https://github.com/NaixGames/Polycosmos/
 
@@ -139,10 +141,18 @@ class HadesIIWorld(World):
         
         
         # Fill traps
-        # Having the separate index seems redundant, once again I'll figure it out later
+        # Having the index separated seems redundant, once again I'll figure it out later
         index = 0
         for _ in range(0, traps_needed):
             item_name = trap_pool[index]
             item = Hades_II_Item(item_name, self.player)
             pool.append(item)
             index = (index + 1) % len(trap_pool)
+            
+        # Add items to pool
+        self.multiworld.itempool += pool
+        
+    # Rules
+    def apply_rules(self):
+        local_location_table = setup_location_table_with_settings(self.options).copy()
+        set_rules(self.multiworld, self.player, self.calculate_number_of_pact_items(), local_location_table, self.options)
