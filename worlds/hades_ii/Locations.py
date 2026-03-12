@@ -4,10 +4,44 @@ from BaseClasses import Location
 hades_ii_base_location_id = 1
 max_number_room_checks = 1700 + hades_ii_base_location_id
 
-location_keepsakes = {
-    "Hecate Keepsake": max_number_room_checks +1,
-    "Odysseus Keepsake": max_number_room_checks +2,
-    "Chaos Keepsake": max_number_room_checks + 33
+location_keepsakes = {    
+    "Hecate Keepsake": max_number_room_checks + 1,
+    "Odysseus Keepsake": max_number_room_checks + 2,
+    "Schelemeus Keepsake": max_number_room_checks + 3,
+    "Dora Keepsake": max_number_room_checks + 4,
+    "Nemisis Keepsake": max_number_room_checks + 5,
+    "Moros Keepsake": max_number_room_checks + 6,
+    "Eris Keepsake": max_number_room_checks + 7,
+    "Charon Keepsake": max_number_room_checks + 8,
+    "Hermes Keepsake": max_number_room_checks + 9,
+    "Artemis Keepsake": max_number_room_checks + 10,
+    "Selene Keepsake": max_number_room_checks + 11,
+    
+    "Zeus Keepsake": max_number_room_checks + 12,
+    "Hera Keepsake": max_number_room_checks + 13,
+    "Poseidon Keepsake": max_number_room_checks + 14,
+    "Demeter Keepsake": max_number_room_checks + 15,
+    "Apollo Keepsake": max_number_room_checks +16,
+    "Aphrodite Keepsake": max_number_room_checks + 17,
+    "Hephaestus Keepsake": max_number_room_checks + 18,
+    "Hestia Keepsake": max_number_room_checks + 19,
+    "Ares Keepsake": max_number_room_checks + 20,
+    "Athena Keepsake": max_number_room_checks + 21,
+    "Dionysus Keepsake": max_number_room_checks + 22,
+    
+    "Arachne Keepsake": max_number_room_checks + 23,
+    "Narcissus Keepsake": max_number_room_checks + 24,
+    "Echo Keepsake": max_number_room_checks + 25,
+    "Heracles Keepsake": max_number_room_checks + 26,
+    "Medea Keepsake": max_number_room_checks + 27,
+    "Circe Keepsake": max_number_room_checks + 28,
+    "Icarus Keepsake": max_number_room_checks + 29,
+    
+    "Hades/Persephone Keepsake": max_number_room_checks + 30,
+    "Zagreus Keepsake": max_number_room_checks + 31,
+    "Chronos Keepsake": max_number_room_checks + 32,
+    
+    "Chaos Keepsake": max_number_room_checks + 33,
 }
 
 location_weapons = {
