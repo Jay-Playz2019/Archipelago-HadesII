@@ -79,9 +79,84 @@ class HadesIILogic(LogicMixin):
     
     def _enough_weapons_victories(self, player: int, options, amount: int) -> bool:
         if options.location_system == "room_weapon_based":
-            counter = sum(self.count("Hades Victory " + w, player) for w in weapons) # type: ignore
+            counter = sum(self.count("Boss Victory " + w, player) for w in weapons) # type: ignore
             return counter >= amount
         else:
             return self.has("Boss Victory", player) and self._has_enough_weapons(player, options, amount) # type: ignore
+        
+    def _has_surface_access(self, player: int) -> bool:
+        return (
+            self.has("Permeation of Witching-Wards", player) and # type: ignore
+            self.has("Unraveling of a Fateful Bond", player) # type: ignore
+        )  
+        
+    def _has_moros_access(self, player: int) -> bool:
+        return self.has("Doomed Beckoning", player)  # type: ignore
 
-# def set_rules(world, player: int, number_items: int, location_table, options) -> None:
+def set_rules(world: "HadesIIWorld", player: int, number_items: int, location_table: dict, options) -> None:
+    # Locations
+    if options.location_system == "room_weapon_based":
+        for weapon in weapons:
+            set_weapon_region_rules(world, player, number_items, location_table, options, weapon) # type: ignore
+    else:
+        add_rule(world.get_entrance("Exit Erebus"),
+    lambda state:
+        state.has("Hecate Victory", player)
+        and state._has_enough_weapons(player, options, 2)) # type: ignore
+
+    add_rule(world.get_entrance("Exit Oceanus"),
+        lambda state:
+            state.has("Scylla Victory", player)
+            and state._has_enough_weapons(player, options, 3)) # type: ignore
+
+    add_rule(world.get_entrance("Exit Fields"),
+        lambda state:
+            state.has("Cerberus Victory", player)
+            and state._has_enough_weapons(player, options, 5)) # type: ignore
+
+    add_rule(world.get_location("Beat Chronos"),
+        lambda state:
+            state._has_enough_weapons(player, options, 6)) # type: ignore
+    
+    world.completion_condition[player] = lambda state: state._can_get_victory(player, options)
+    
+    # Keepsakes
+    if options.keepsakesanity:
+        add_rule(world.get_entrance("NPCS"), lambda state: True)
+        keepsake_rules = [ # ("Name Keepsake", "Boss Victory" {OR NONE}, Surface Needed [bool])
+            ("Narcissus Keepsake", "Hecate Victory", False),
+            ("Hermes Keepsake", "Hecate Victory", False),
+            ("Echo Keepsake", "Scylla Victory", False),
+            ("Medea Keepsake", None, True),
+            ("Hera Keepsake", None, True),
+            ("Heracles Keepsake", None, True),
+            ("Icarus Keepsake", "Polyphemus Victory", True),
+            ("Circe Keepsake", "Polyphemus Victory", True),
+            ("Eris Keepsake", "Eris Victory", True),
+            ("Athena Keepsake", "Eris Victory", True),
+            ("Dionysus Keepsake", "Eris Victory", True),
+            ("Ares Keepsake", "Prometheus Victory", True),
+            
+        ]
+
+        for location, boss, surface in keepsake_rules:
+            add_rule(
+                world.get_location(location),
+                lambda state, boss=boss, surface=surface:
+                    (boss is None or state._has_defeated_boss(boss, player, options))  # type: ignore
+                    and (not surface or state._has_surface_access(player))  # type: ignore
+            )
+        
+        # Specifically Moros
+        add_rule(
+            world.get_location("Moros Keepsake"),
+            lambda state: state._has_moros_access(player)  # type: ignore
+        )
+        
+    # if options.weaponsanity:
+    #     add_rule(world.get_entrance("Weapon Cache", player), lambda state: True)
+        
+    # if options.fatesanity:
+    #     set_fates_rules(world, player, location_table, options, "")
+        
+    # set_fates_rules(world, player, location_table, options, " Event")
