@@ -139,20 +139,6 @@ class HadesIIWorld(World):
                 self.multiworld, self.player, self.calculate_number_of_pact_items(), 
                 local_location_table, self.options
         )
-        
-# Regions
-def create_region(multiworld: MultiWorld, player: int, location_database: dict, name: str, locations=None, exits=None) -> Region:
-    temp_region = Region(name, player, multiworld)
-    if locations:
-        for location in locations:
-            loc_id = location_database.get(location, 0)
-            location = HadesIILocation(player, location, loc_id, temp_region)
-            temp_region.locations.append(location)
-    if exits:
-        for exit in exits:
-            temp_region.exits.append(Entrance(player, exit, temp_region))
-
-    return temp_region
 
 # Places boss event pseudo-items at each location
 def place_boss_events(world, player):
