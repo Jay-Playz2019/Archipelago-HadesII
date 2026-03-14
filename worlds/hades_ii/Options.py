@@ -18,7 +18,7 @@ class LocationSystem(Choice):
     Chooses how the game gives you items. RoomBased gives items on every new room completed. 
     """
     display_name = "Location System"
-    option_room_based = 1
+    option_room_based = 0
     
 class KeepsakeSanity(DefaultOnToggle):
     """

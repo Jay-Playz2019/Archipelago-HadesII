@@ -33,7 +33,7 @@ class HadesIIWorld(World):
     item_name_groups = {name: set(group) for name, group in item_name_groups.items()}
     location_name_groups = {name: set(group) for name, group in location_name_groups.items()}
     
-    # Rules
+    # Regions
     def create_regions(self):
         create_regions(self.player, self.multiworld, self.location_name_to_id)
         

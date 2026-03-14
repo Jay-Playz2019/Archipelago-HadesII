@@ -1,6 +1,6 @@
 from typing import Dict, NamedTuple, Optional
 from BaseClasses import Item, ItemClassification
-from .Locations import setup_location_table_with_settings, location_table_prophecies_events
+from .Locations import setup_location_table_with_settings, location_table_prophecies
 
 class ItemData(NamedTuple):
     code: Optional[int]
@@ -18,70 +18,76 @@ class Hades_II_Item(Item):
 
 hades_ii_base_item_id = 1
 
+fears_base_item_id = hades_ii_base_item_id
 item_table_fears: Dict[str, ItemData] = {
-    "Item1": ItemData(hades_ii_base_item_id, ItemClassification.progression),
-    "Item2": ItemData(hades_ii_base_item_id+1, ItemClassification.progression)
+    "Item1": ItemData(hades_ii_base_item_id+1, ItemClassification.progression),
+    "Item2": ItemData(hades_ii_base_item_id+2, ItemClassification.progression)
 }
 
-item_table_prophesy_completion: Dict[str, ItemData] = {
-    "prophesy | Event Item": ItemData(None, ItemClassification.progression, True)
-}
-
+filler_base_item_id = fears_base_item_id + 2
 item_table_filler: Dict[str, ItemData] = {
-    "filler1": ItemData(hades_ii_base_item_id+3, ItemClassification.filler)
+    "filler1": ItemData(filler_base_item_id+1, ItemClassification.filler),
+    "filler2": ItemData(filler_base_item_id+2, ItemClassification.filler)
 }
 
+keepsakes_base_item_id  = filler_base_item_id + 2
 item_table_keepsakes: Dict[str, ItemData] = {
-    "Hecate Keepsake": ItemData(hades_ii_base_item_id +4, ItemClassification.progression),
-    "Odysseus Keepsake": ItemData(hades_ii_base_item_id +5, ItemClassification.progression),
-    "Schelemeus Keepsake": ItemData(hades_ii_base_item_id +6, ItemClassification.progression),
-    "Dora Keepsake": ItemData(hades_ii_base_item_id +7, ItemClassification.progression),
-    "Nemesis Keepsake": ItemData(hades_ii_base_item_id +8, ItemClassification.progression),
-    "Moros Keepsake": ItemData(hades_ii_base_item_id +9, ItemClassification.progression),
-    "Eris Keepsake": ItemData(hades_ii_base_item_id +10, ItemClassification.progression),
-    "Charon Keepsake": ItemData(hades_ii_base_item_id +11, ItemClassification.progression),
-    "Hermes Keepsake": ItemData(hades_ii_base_item_id +12, ItemClassification.progression),
-    "Artemis Keepsake": ItemData(hades_ii_base_item_id +13, ItemClassification.progression),
-    "Selene Keepsake": ItemData(hades_ii_base_item_id +14, ItemClassification.progression),
-    
-    "Zeus Keepsake": ItemData(hades_ii_base_item_id +15, ItemClassification.progression),
-    "Hera Keepsake": ItemData(hades_ii_base_item_id +16, ItemClassification.progression),
-    "Poseidon Keepsake": ItemData(hades_ii_base_item_id +17, ItemClassification.progression),
-    "Demeter Keepsake": ItemData(hades_ii_base_item_id +18, ItemClassification.progression),
-    "Apollo Keepsake": ItemData(hades_ii_base_item_id +19, ItemClassification.progression),
-    "Aphrodite Keepsake": ItemData(hades_ii_base_item_id +20, ItemClassification.progression),
-    "Hephaestus Keepsake": ItemData(hades_ii_base_item_id +21, ItemClassification.progression),
-    "Hestia Keepsake": ItemData(hades_ii_base_item_id +22, ItemClassification.progression),
-    "Ares Keepsake": ItemData(hades_ii_base_item_id +23, ItemClassification.progression),
-    "Athena Keepsake": ItemData(hades_ii_base_item_id +24, ItemClassification.progression),
-    "Dionysus Keepsake": ItemData(hades_ii_base_item_id +25, ItemClassification.progression),
-    
-    "Arachne Keepsake": ItemData(hades_ii_base_item_id +26, ItemClassification.progression),
-    "Narcissus Keepsake": ItemData(hades_ii_base_item_id +27, ItemClassification.progression),
-    "Echo Keepsake": ItemData(hades_ii_base_item_id +28, ItemClassification.progression),
-    "Heracles Keepsake": ItemData(hades_ii_base_item_id +29, ItemClassification.progression),
-    "Medea Keepsake": ItemData(hades_ii_base_item_id +30, ItemClassification.progression),
-    "Circe Keepsake": ItemData(hades_ii_base_item_id +31, ItemClassification.progression),
-    "Icarus Keepsake": ItemData(hades_ii_base_item_id +32, ItemClassification.progression),
-    
-    "Hades/Persephone Keepsake": ItemData(hades_ii_base_item_id +33, ItemClassification.progression),
-    "Zagreus Keepsake": ItemData(hades_ii_base_item_id +34, ItemClassification.progression),
-    "Chronos Keepsake": ItemData(hades_ii_base_item_id +35, ItemClassification.progression),
-    
-    "Chaos Keepsake": ItemData(hades_ii_base_item_id +36, ItemClassification.progression),
+    "Hecate Keepsake": ItemData(keepsakes_base_item_id + 1, ItemClassification.progression),
+    "Odysseus Keepsake": ItemData(keepsakes_base_item_id + 2, ItemClassification.progression),
+    "Schelemeus Keepsake": ItemData(keepsakes_base_item_id + 3, ItemClassification.progression),
+    "Dora Keepsake": ItemData(keepsakes_base_item_id + 4, ItemClassification.progression),
+    "Nemesis Keepsake": ItemData(keepsakes_base_item_id + 5, ItemClassification.progression),
+    "Moros Keepsake": ItemData(keepsakes_base_item_id + 6, ItemClassification.progression),
+    "Eris Keepsake": ItemData(keepsakes_base_item_id + 7, ItemClassification.progression),
+    "Charon Keepsake": ItemData(keepsakes_base_item_id + 8, ItemClassification.progression),
+    "Hermes Keepsake": ItemData(keepsakes_base_item_id + 9, ItemClassification.progression),
+    "Artemis Keepsake": ItemData(keepsakes_base_item_id + 10, ItemClassification.progression),
+    "Selene Keepsake": ItemData(keepsakes_base_item_id + 11, ItemClassification.progression),
+
+    "Zeus Keepsake": ItemData(keepsakes_base_item_id + 12, ItemClassification.progression),
+    "Hera Keepsake": ItemData(keepsakes_base_item_id + 13, ItemClassification.progression),
+    "Poseidon Keepsake": ItemData(keepsakes_base_item_id + 14, ItemClassification.progression),
+    "Demeter Keepsake": ItemData(keepsakes_base_item_id + 15, ItemClassification.progression),
+    "Apollo Keepsake": ItemData(keepsakes_base_item_id + 16, ItemClassification.progression),
+    "Aphrodite Keepsake": ItemData(keepsakes_base_item_id + 17, ItemClassification.progression),
+    "Hephaestus Keepsake": ItemData(keepsakes_base_item_id + 18, ItemClassification.progression),
+    "Hestia Keepsake": ItemData(keepsakes_base_item_id + 19, ItemClassification.progression),
+    "Ares Keepsake": ItemData(keepsakes_base_item_id + 20, ItemClassification.progression),
+    "Athena Keepsake": ItemData(keepsakes_base_item_id + 21, ItemClassification.progression),
+    "Dionysus Keepsake": ItemData(keepsakes_base_item_id + 22, ItemClassification.progression),
+
+    "Arachne Keepsake": ItemData(keepsakes_base_item_id + 23, ItemClassification.progression),
+    "Narcissus Keepsake": ItemData(keepsakes_base_item_id + 24, ItemClassification.progression),
+    "Echo Keepsake": ItemData(keepsakes_base_item_id + 25, ItemClassification.progression),
+    "Heracles Keepsake": ItemData(keepsakes_base_item_id + 26, ItemClassification.progression),
+    "Medea Keepsake": ItemData(keepsakes_base_item_id + 27, ItemClassification.progression),
+    "Circe Keepsake": ItemData(keepsakes_base_item_id + 28, ItemClassification.progression),
+    "Icarus Keepsake": ItemData(keepsakes_base_item_id + 29, ItemClassification.progression),
+
+    "Hades/Persephone Keepsake": ItemData(keepsakes_base_item_id + 30, ItemClassification.progression),
+    "Zagreus Keepsake": ItemData(keepsakes_base_item_id + 31, ItemClassification.progression),
+    "Chronos Keepsake": ItemData(keepsakes_base_item_id + 32, ItemClassification.progression),
+
+    "Chaos Keepsake": ItemData(keepsakes_base_item_id + 33, ItemClassification.progression),
 }
 
+weapons_base_item_id = keepsakes_base_item_id + 33
 item_table_weapons: Dict[str, ItemData] = {
-    "Staff Weapon Unlock Item": ItemData(hades_ii_base_item_id+37, ItemClassification.progression),
-    "Daggers Weapon Unlock Item": ItemData(hades_ii_base_item_id+38, ItemClassification.progression),
-    "Torches Weapon Unlock Item": ItemData(hades_ii_base_item_id+39, ItemClassification.progression),
-    "Axe Weapon Unlock Item": ItemData(hades_ii_base_item_id+40, ItemClassification.progression),
-    "Skull Weapon Unlock Item": ItemData(hades_ii_base_item_id+41, ItemClassification.progression),
-    "Coat Weapon Unlock Item": ItemData(hades_ii_base_item_id+42, ItemClassification.progression)
+    "Staff Weapon Unlock Item": ItemData(weapons_base_item_id+1, ItemClassification.progression),
+    "Daggers Weapon Unlock Item": ItemData(weapons_base_item_id+2, ItemClassification.progression),
+    "Torches Weapon Unlock Item": ItemData(weapons_base_item_id+3, ItemClassification.progression),
+    "Axe Weapon Unlock Item": ItemData(weapons_base_item_id+4, ItemClassification.progression),
+    "Skull Weapon Unlock Item": ItemData(weapons_base_item_id+5, ItemClassification.progression),
+    "Coat Weapon Unlock Item": ItemData(weapons_base_item_id+6, ItemClassification.progression)
 }
 
+tools_base_item_id = weapons_base_item_id +6
 item_table_tools: Dict[str, ItemData] = {
-    "X Tool Unlock Item": ItemData(hades_ii_base_item_id+11, ItemClassification.progression)
+    "Crescent Pickaxe Tool Unlock Item": ItemData(tools_base_item_id+1, ItemClassification.progression),
+    "Crescent Pickaxe Tool Unlock Item": ItemData(tools_base_item_id+1, ItemClassification.progression),
+    "Crescent Pickaxe Tool Unlock Item": ItemData(tools_base_item_id+1, ItemClassification.progression),
+    "Crescent Pickaxe Tool Unlock Item": ItemData(tools_base_item_id+1, ItemClassification.progression)
+
 }
 
 item_table_aspects: Dict[str, ItemData] = {
@@ -96,9 +102,13 @@ item_table_helpers: Dict[str, ItemData] = {
     "helper1": ItemData(hades_ii_base_item_id+14, ItemClassification.progression | ItemClassification.useful)
 }
 
+item_table_prophecies_completion = {
+    
+}
+
 item_table = {
     **item_table_fears,
-    **item_table_prophesy_completion,
+    **item_table_prophecies_completion,
     **item_table_filler,
     **item_table_keepsakes,
     **item_table_weapons,
@@ -153,7 +163,7 @@ def create_items(self) -> None:
 
     # Prophecies
     if self.options.fatesanity:
-        pool.extend(self.create_item(name) for name in item_table_prophesy_completion)
+        pool.extend(self.create_item(name) for name in item_table_prophecies_completion)
             
     # Handle fillers and traps
     handle_fillers(self, pool, local_location_table)
@@ -188,7 +198,7 @@ def place_boss_events(world, player) -> None:
 
 # Calculates percentages of filler materials and traps    
 def handle_fillers(self, pool, local_location_table):
-    total_fillers_needed = len(local_location_table) - len(pool) - len(location_table_prophecies_events) 
+    total_fillers_needed = len(local_location_table) - len(pool) - len(location_table_prophecies) 
     
     # Define the percentages in the pool based off options
     # ? Add F. Fabric to speed things up for the player?

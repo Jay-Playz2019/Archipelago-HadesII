@@ -1,5 +1,5 @@
 from typing import TYPE_CHECKING
-from .Items import item_table_fears, item_table_keepsakes, item_table_prophesy_completion
+from .Items import item_table_fears, item_table_keepsakes, item_table_prophecies_completion
 from worlds.AutoWorld import LogicMixin
 from worlds.generic.Rules import add_rule
 
@@ -62,7 +62,7 @@ class HadesIILogic(LogicMixin):
     # Checks if the player has enough prophecies completed for goal
     def _has_enough_prophecies_done(self, player: int, amount: int) -> bool:
         amount_props = 0 
-        for prop_name in item_table_prophesy_completion:
+        for prop_name in item_table_prophecies_completion:
             amount_props += self.count(prop_name, player) # type: ignore
         return amount_props >= amount
     
