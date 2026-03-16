@@ -92,7 +92,35 @@ item_table_tools: Dict[str, ItemData] = {
 
 aspects_base_item_id = tools_base_item_id +4
 item_table_aspects: Dict[str, ItemData] = {
-    "X Weapon Y Aspect Unlock Item": ItemData(aspects_base_item_id+ 1 , ItemClassification.progression)
+    "Staff Weapon Melinoë Aspect Unlock Item": ItemData(aspects_base_item_id + 1, ItemClassification.progression),
+    "Staff Weapon Circe Aspect Unlock Item": ItemData(aspects_base_item_id + 2, ItemClassification.progression),
+    "Staff Weapon Momus Aspect Unlock Item": ItemData(aspects_base_item_id + 3, ItemClassification.progression),
+    "Staff Weapon Anubis Aspect Unlock Item": ItemData(aspects_base_item_id + 4, ItemClassification.progression),
+
+    "Daggers Weapon Melinoë Aspect Unlock Item": ItemData(aspects_base_item_id + 5, ItemClassification.progression),
+    "Daggers Weapon Pan Aspect Unlock Item": ItemData(aspects_base_item_id + 6, ItemClassification.progression),
+    "Daggers Weapon Artemis Aspect Unlock Item": ItemData(aspects_base_item_id + 7, ItemClassification.progression),
+    "Daggers Weapon Morrigan Aspect Unlock Item": ItemData(aspects_base_item_id + 8, ItemClassification.progression),
+
+    "Torches Weapon Melinoë Aspect Unlock Item": ItemData(aspects_base_item_id + 9, ItemClassification.progression),
+    "Torches Weapon Moros Aspect Unlock Item": ItemData(aspects_base_item_id + 10, ItemClassification.progression),
+    "Torches Weapon Eos Aspect Unlock Item": ItemData(aspects_base_item_id + 11, ItemClassification.progression),
+    "Torches Weapon Supay Aspect Unlock Item": ItemData(aspects_base_item_id + 12, ItemClassification.progression),
+
+    "Axe Weapon Melinoë Aspect Unlock Item": ItemData(aspects_base_item_id + 13, ItemClassification.progression),
+    "Axe Weapon Charon Aspect Unlock Item": ItemData(aspects_base_item_id + 14, ItemClassification.progression),
+    "Axe Weapon Thanatos Aspect Unlock Item": ItemData(aspects_base_item_id + 15, ItemClassification.progression),
+    "Axe Weapon Nergal Aspect Unlock Item": ItemData(aspects_base_item_id + 16, ItemClassification.progression),
+
+    "Skull Weapon Melinoë Aspect Unlock Item": ItemData(aspects_base_item_id + 17, ItemClassification.progression),
+    "Skull Weapon Medea Aspect Unlock Item": ItemData(aspects_base_item_id + 18, ItemClassification.progression),
+    "Skull Weapon Persephone Aspect Unlock Item": ItemData(aspects_base_item_id + 19, ItemClassification.progression),
+    "Skull Weapon Hel Aspect Unlock Item": ItemData(aspects_base_item_id + 20, ItemClassification.progression),
+
+    "Coat Weapon Melinoë Aspect Unlock Item": ItemData(aspects_base_item_id + 21, ItemClassification.progression),
+    "Coat Weapon Selene Aspect Unlock Item": ItemData(aspects_base_item_id + 22, ItemClassification.progression),
+    "Coat Weapon Nyx Aspect Unlock Item": ItemData(aspects_base_item_id + 23, ItemClassification.progression),
+    "Coat Weapon Shiva Aspect Unlock Item": ItemData(aspects_base_item_id + 24, ItemClassification.progression),
 }
 
 traps_base_item_id = aspects_base_item_id + 24

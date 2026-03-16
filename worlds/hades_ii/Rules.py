@@ -62,8 +62,8 @@ class HadesIILogic(LogicMixin):
     # Checks if the player has enough prophecies completed for goal
     def _has_enough_prophecies_done(self, player: int, amount: int) -> bool:
         amount_props = 0 
-        for prop_name in item_table_prophecies_completion:
-            amount_props += self.count(prop_name, player) # type: ignore
+        for prop in item_table_prophecies_completion:
+            amount_props += self.count(prop, player) # type: ignore
         return amount_props >= amount
     
     # Checks if the player has defeated the boss with enough (depending on options):

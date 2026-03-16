@@ -11,19 +11,13 @@ from .Rules import set_rules
 # Probably needs to be re-done, mostly copied from H1 AP
 # https://github.com/NaixGames/Polycosmos/
 
-class HadesIISettings(settings.Group):
-    class StyxScribePath(settings.UserFilePath):
-        """Path to the StyxScribe install"""
-
-    styx_scribe_path: StyxScribePath = StyxScribePath(
-        "C:/Program Files/Steam/steamapps/common/Hades/StyxScribe.py")
 
 class HadesIIWorld(World):
     options: HadesIIOptions
     # options_dataclass = HadesIIOptions
     game: str = "Hades II"
     topology_present: bool = False
-    settings: typing.ClassVar[HadesIISettings]
+    # settings: typing.ClassVar[HadesIISettings]
     # TODO: Web world eventually
     required_client_version: tuple = (0, 6, 4)
     
