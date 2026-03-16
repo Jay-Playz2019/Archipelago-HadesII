@@ -91,6 +91,8 @@ location_weapons = {
     "Coat weapon Unlock Location": weapon_checks +6
 }
 
+# TODO: Aspects
+
 # Finished
 tool_checks = weapon_checks + 6
 location_tools = {
