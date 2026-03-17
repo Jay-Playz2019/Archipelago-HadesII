@@ -45,7 +45,7 @@ location_keepsakes = {
     "Odysseus Keepsake": keepsake_checks + 2,
     "Schelemeus Keepsake": keepsake_checks + 3,
     "Dora Keepsake": keepsake_checks + 4,
-    "Nemisis Keepsake": keepsake_checks + 5,
+    "Nemesis Keepsake": keepsake_checks + 5,
     "Moros Keepsake": keepsake_checks + 6,
     "Eris Keepsake": keepsake_checks + 7,
     "Charon Keepsake": keepsake_checks + 8,

@@ -1,5 +1,5 @@
 from typing import TYPE_CHECKING
-from .Items import item_table_fears, item_table_keepsakes, item_table_prophecies_completion
+from .Items import item_table_fears, item_table_keepsakes, item_table_prophecies
 from worlds.AutoWorld import LogicMixin
 from worlds.generic.Rules import add_rule
 
@@ -62,7 +62,7 @@ class HadesIILogic(LogicMixin):
     # Checks if the player has enough prophecies completed for goal
     def _has_enough_prophecies_done(self, player: int, amount: int) -> bool:
         amount_props = 0 
-        for prop in item_table_prophecies_completion:
+        for prop in item_table_prophecies:
             amount_props += self.count(prop, player) # type: ignore
         return amount_props >= amount
     
@@ -135,26 +135,22 @@ def set_rules(world, player: int, location_table: dict, options) -> None:
 # Defines logic for each area / region
 # TODO: Make these actual event "items" / make them work
 def handle_area_logic(world, player):
-    area_rules = [ # ("Region name", "Boss Victory", Final boss? [Bool])
-    ("Oceanus", "Hecate Victory", True),
-    ("Fields", "Scylla Victory", True),
-    ("Tartarus", "Cerberus Victory", True),
-    ("Chronos", "Chronos Victory", False), 
+    area_rules = [ # ("Region name", "Boss Victory")
+    ("Erebus -> Oceanus", "Hecate Victory"),
+    ("Oceanus -> Fields", "Scylla Victory"),
+    ("Fields -> Tartarus", "Cerberus Victory"),
     
-    ("Ephyra", "Polyphemus Victory", True),
-    ("Thessaly", "Eris Victory", True),
-    ("Olympus", "Prometheus Victory", True),
-    ("Surface", "Typhon Victory", False),
+    ("Ephyra -> Thessaly", "Polyphemus Victory"),
+    ("Thessaly -> Olympus", "Eris Victory"),
+    ("Olympus -> Summit", "Prometheus Victory"),
     ]
     
-    for area_name, victory_item, is_entrance in area_rules:
-        target = world.get_entrance(area_name) if is_entrance else world.get_location(area_name)
-        add_rule(target, lambda state, victory_item=victory_item: state.has(victory_item, player))
+    for entrance_name, victory_item in area_rules:
+        add_rule(world.get_entrance(entrance_name, player), lambda state, v=victory_item: state.has(v, player))
 
 # Defines logic for keepsakes, the logic doc lists NPCs in more detail
 def handle_keepsakes(world, player, options):
     if options.keepsakesanity: # If randomized
-        add_rule(world.get_entrance("NPCS"), lambda state: True)
         keepsake_rules = [ # ("Name Keepsake", "Boss Victory" {OR NONE}, Surface Needed [bool])
             ("Narcissus Keepsake", "Hecate Victory", False),
             ("Hermes Keepsake", "Hecate Victory", False),
@@ -169,9 +165,9 @@ def handle_keepsakes(world, player, options):
 
         # Apply logic to each keepsake check
         # Location-based
-        for person, boss, surface in keepsake_rules:
+        for person_keepsake, boss, surface in keepsake_rules:
             add_rule(
-                world.get_location(person),
+                world.get_location(person_keepsake, player),
                 lambda state, boss=boss, surface=surface:
                     (boss is None or state._has_defeated_boss(boss, player, options)) # type: ignore
                     and (not surface or state._has_surface_access(player)) # type: ignore
@@ -180,14 +176,14 @@ def handle_keepsakes(world, player, options):
         # Olympians require their own keepsake to be logically checked
         for person in olympians:
             add_rule(
-                world.get_location(f"{person} Keepsake"),
+                world.get_location(f"{person} Keepsake", player),
                 lambda state, person=person:
                     state.has(f"{person} Keepsake", player)
             )
         
         # Specifically Moros
         add_rule(
-            world.get_location("Moros Keepsake"),
+            world.get_location("Moros Keepsake", player),
             lambda state: state._has_moros_access(player) # type: ignore
             )
         

@@ -18,7 +18,9 @@ class LocationSystem(Choice):
     Chooses how the game gives you items. RoomBased gives items on every new room completed. 
     """
     display_name = "Location System"
-    option_room_based = 0
+    room_based = 0
+    room_weapon_based = 1
+    score_based = 2
     
 class KeepsakeSanity(DefaultOnToggle):
     """
@@ -72,7 +74,7 @@ class WeaponsClearsNeeded(Range):
     
 class KeepsakesNeeded(Range):
     """
-    How many different keepsake unlocks are needed to win the world.
+    How many different keepsake ITEMS are needed to win the world.
     """
     display_name = "KeepsakesNeeded"
     range_start = 0
@@ -81,7 +83,7 @@ class KeepsakesNeeded(Range):
 
 class FatesNeeded(Range):
     """
-    How many different Fated List completions are needed to win the world.
+    How many different Fated List CHECKS you need to finish in order to win the world.
     Note that larger amounts can make the game significantly longer.
     """
     display_name = "FatesNeeded"
@@ -199,7 +201,6 @@ class AmbrosiaPackPercentage(Range):
     range_end = 100
     default = 10
 
-
 class NightmarePackValue(Range):
     """
     Choose the value (amount of Nightmare) of each Nightmare pack in the pool. 
@@ -233,7 +234,6 @@ class FillerHelperPercentage(Range):
     range_start = 0
     range_end = 100
     default = 10
-
 
 class MaxHealthHelperPercentage(Range):
     """
